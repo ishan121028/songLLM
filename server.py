@@ -32,7 +32,6 @@ chars = sorted(list(set(text)))
 @app.post("/generatetext")
 def generate_text(request: GenerateRequest):
 # def generate_text(text, max_length):
-    
 
     stoi = { ch:i for i,ch in enumerate(chars) }
     itos = { i:ch for i,ch in enumerate(chars) }
@@ -42,11 +41,9 @@ def generate_text(request: GenerateRequest):
     x = torch.tensor([stoi[s] for s in context], dtype=torch.long)[None,...]
     y = model.generate(x, max_length, temperature=1.0, do_sample=True, top_k=10)[0]
     completion = ''.join([itos[int(i)] for i in y])
-    # print(completion)
+
     return {"generated_text":completion}
 
-# if __name__ == "__main__":
-#     generate_text("I love you", 500)
         
 
 
