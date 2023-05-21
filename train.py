@@ -10,9 +10,8 @@ import pandas as pd
 import os
 import fire
 
-def get_config(fp, op, lr):
+def get_config(fp, lr):
     print("file path: ",fp)
-    print("output path: ",op)
     print("learning rate: ",lr)
 
     C = CN()
@@ -20,7 +19,7 @@ def get_config(fp, op, lr):
     # system
     C.system = CN()
     C.system.seed = 3407
-    C.system.work_dir = op
+    C.system.work_dir = 'out/SongData'
 
     # data
     C.data = SongDataset.get_default_config()
@@ -72,15 +71,11 @@ class SongDataset(Dataset):
         x = torch.tensor(dix[:-1], dtype=torch.long)
         y = torch.tensor(dix[1:], dtype=torch.long)
         return x, y
-    
+
 if __name__ == '__main__':
 
     # get default config and overrides from the command line, if any
-    
     (config, data_path) = fire.Fire(get_config)
-
-    print(config)
-    setup_logging(config)
     set_seed(config.system.seed)
 
     # construct the training dataset
@@ -88,17 +83,20 @@ if __name__ == '__main__':
     text = df['text'].str.cat(sep="\n")    
     train_dataset = SongDataset(config.data, text)
 
-    config.model.vocab_size = train_dataset.get_vocab_size()
-    print(train_dataset.get_vocab_size())
+    # update the config with the block as well as model size and log it into the working directory
     config.model.block_size = train_dataset.get_block_size()
-
-    model = GPT(config.model)
-    config.vocab_size = train_dataset.get_vocab_size()
+    config.model.vocab_size = train_dataset.get_vocab_size()
     config.block_size = train_dataset.get_block_size()
-    # print("vocabolary_size"config.model.vocab_size)
-    # print(config.model.block_size)
+    config.vocab_size = train_dataset.get_vocab_size()
+    setup_logging(config)
 
-    # construct the trainer object
+    # instantiate the model
+    model = GPT(config.model)
+    model.load_state_dict(torch.load('out/SongData/model.pt', torch.device('cpu')))
+
+    #printing the configurations of the model
+    print(config)
+
     trainer = Trainer(config.trainer, model, train_dataset)
 
     # iteration callback

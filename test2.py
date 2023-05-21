@@ -1,6 +1,7 @@
 import requests
 import threading
 import argparse
+import time
 
 def send_message(url, messages, max_length):
     for message in messages:
@@ -12,10 +13,11 @@ def send_message(url, messages, max_length):
         else:
             print("Failed to send the message.")
 
-def stress_test(url, num_threads, num_requests):
+def stress_test(url, num_threads, num_requests, max_length):
     def make_requests():
         for _ in range(num_requests):
-            response = requests.post()
+            payload = {"text":'',"max_length":max_length}
+            response = requests.post(url, json=payload)
             print(f"Response status code: {response.status_code}")
 
     threads = []
@@ -38,19 +40,19 @@ def main():
     parser.add_argument('--messages', type=str, nargs='+', help='Message to send to the server')
     parser.add_argument('--threads', type=int, default=1, help='Number of threads to use for stress testing')
     parser.add_argument('--requests', type=int, default=1, help='Number of requests per thread for stress testing')
-    parser.add_argument('--input', type=str, help='Input text to process with the model')
     parser.add_argument('--max_length',type=int, help='Maximum number of characters to be outputed by the model')
     args = parser.parse_args()
 
-    if args.url and args.messages:
-        send_message(args.url, args.messages, args.max_length)
+    # if args.url and args.messages:
+    #     send_message(args.url, args.messages, args.max_length)
 
     if args.url and args.threads > 0 and args.requests > 0:
-        stress_test(args.url, args.threads, args.requests)
+        stress_test(args.url, args.threads, args.requests, args.max_length)
 
     if args.input:
         processed_text = process_input(args.input)
         print(f"Processed text: {processed_text}")
 
 if __name__ == '__main__':
+
     main()
