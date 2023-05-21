@@ -3,7 +3,8 @@ This is a repository for the challenge by NimbleBox.ai for the internship role o
 ## Instructions
 Firstly, download all the files locally, using `git clone https://github.com/ishan121028/songLLM.git`\\
 Use this command in the directory to download all the requirements of the system `pip install -r requirements.txt`\\
-Change the directory to minGPT/ and run the command `pip install -e .`\
+Change the directory to minGPT/ and run the command\
+`pip install -e .`\
 Now we are good to go with training and serving our model.
 
 
@@ -29,9 +30,9 @@ We can use these commands to curl (Windows):\
 
 ### Multithreading 
 
-* Stress Testing the server: For stress testing, we can use this command, `python stress_test.py --url http://127.0.0.1:8000/generatetext --threads 10 --requests 10 --max_length 500`\
-* Normal Inference: For normal inference from our model, we can use this command `python normal_inference.py --url http://127.0.0.1:8000/generatetext --messages "I" "have" "applied" "for" "NimbleBox" "Internship" --max_length 500`
-* Multi Threaded Inference: For multi threases inference from our model, we can use this command `python multi_inference.py --url http://127.0.0.1:8000/generatetext --messages "I" "have" "applied" "for" "NimbleBox" "Internship" --max_length 500`
+* Stress Testing the server: For stress testing, we can use this command,\ `python stress_test.py --url http://127.0.0.1:8000/generatetext --threads 10 --requests 10 --max_length 500`\
+* Normal Inference: For normal inference from our model, we can use this command \ `python normal_inference.py --url http://127.0.0.1:8000/generatetext --messages "I" "have" "applied" "for" "NimbleBox" "Internship" --max_length 500`
+* Multi Threaded Inference: For multi threases inference from our model, we can use this command \ `python multi_inference.py --url http://127.0.0.1:8000/generatetext --messages "I" "have" "applied" "for" "NimbleBox" "Internship" --max_length 500`
 
 
 
