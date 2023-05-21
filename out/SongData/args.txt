@@ -1,1 +1,1 @@
-train.py --fp=dataset/spotify_millsongdata.csv --lr=1e-5
+train.py --fp dataset/spotify_millsongdata.csv --lr 5e-4
