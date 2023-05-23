@@ -3,6 +3,8 @@ This is a repository for the challenge by NimbleBox.ai for the internship role o
 ## Instructions
 Firstly, download all the files locally, using `git clone https://github.com/ishan121028/songLLM.git`<br/>
 Use this command in the directory to download all the requirements of the system `pip install -r requirements.txt`<br/>
+Then initialize the submodule by this command `git submodule init` <br/>
+Also use this command to update the submodules from the remote `git submodule update --force --recursive --init --remote`<br/>
 Change the directory to `minGPT/` and run the command <br/>
 `pip install -e .` <br/>
 Now we are good to go with training and serving our model.
