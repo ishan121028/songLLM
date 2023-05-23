@@ -21,13 +21,11 @@ config.vocab_size = data['vocab_size']
 config.block_size = data['block_size']
 config.model_type = 'gpt-mini'
 model = GPT(config)
+chars = data['chars']
+
 
 model.load_state_dict(torch.load("out/SongData/model.pt",map_location=torch.device('cpu')))
-device = 'auto'
-
-df = pd.read_csv('dataset/spotify_millsongdata.csv')
-text = df['text'].str.cat(sep="\n")    
-chars = sorted(list(set(text)))
+device = 'cpu'
 
 @app.post("/generatetext")
 def generate_text(request: GenerateRequest):

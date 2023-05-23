@@ -4,7 +4,6 @@ import argparse
 import time
 
 def fast_inference(url, messages, max_length):
-    # print("hello")
     
     def send_message(message):
         payload = {"text":message, "max_length":max_length}
@@ -26,7 +25,7 @@ def fast_inference(url, messages, max_length):
 
     
 def main():
-    parser = argparse.ArgumentParser(description='Server Stress Test, Messaging, and Model CLI')
+    parser = argparse.ArgumentParser(description='Multi threaded inference')
     parser.add_argument('--url', type=str, help='URL of the server')
     parser.add_argument('--messages', nargs="*", type=str, default=" ", help='All the prompts')
     parser.add_argument('--max_length',type=int, help='Maximum number of characters to be outputed by the model')

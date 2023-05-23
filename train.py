@@ -44,12 +44,12 @@ class SongDataset(Dataset):
     def __init__(self, config, data):
         self.config = config
 
-        chars = sorted(list(set(data)))
-        data_size, vocab_size = len(data), len(chars)
+        self.chars = sorted(list(set(data)))
+        data_size, vocab_size = len(data), len(self.chars)
         print('data has %d characters, %d unique.' % (data_size, vocab_size))
 
-        self.stoi = { ch:i for i,ch in enumerate(chars) }
-        self.itos = { i:ch for i,ch in enumerate(chars) }
+        self.stoi = { ch:i for i,ch in enumerate(self.chars) }
+        self.itos = { i:ch for i,ch in enumerate(self.chars) }
         self.vocab_size = vocab_size
         self.data = data
 
@@ -88,6 +88,7 @@ if __name__ == '__main__':
     config.model.vocab_size = train_dataset.get_vocab_size()
     config.block_size = train_dataset.get_block_size()
     config.vocab_size = train_dataset.get_vocab_size()
+    config.chars = train_dataset.chars
     setup_logging(config)
 
     # instantiate the model
